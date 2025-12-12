@@ -140,12 +140,7 @@ app.post('/enviarYDescargar', async (req, res) => {
         const formDataForGoogleSheets = new URLSearchParams({
             first_name: body.first_name,
             phone: body.phone,
-            email: body.email,
-            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
-            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
-            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
-            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
-            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+            email: body.email
         });
 
         const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
@@ -257,12 +252,7 @@ app.post('/enviar', async (req, res) => {
         const formDataForGoogleSheets = new URLSearchParams({
             first_name: body.first_name,
             phone: body.phone,
-            email: body.email,
-            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
-            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
-            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
-            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
-            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+            email: body.email
         });
 
         const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
