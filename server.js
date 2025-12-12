@@ -7,6 +7,12 @@ import { fileURLToPath } from 'url';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ========================================
+// CONFIGURACIÓN: Google Sheets Script URL
+// ========================================
+// URL del script de Google Sheets para PASEO DE LOS AGAVES
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzfgaVK_ALVIyBrqG9t1zpIA5PkpqvOxmT8SpEB10-g1ybyDdjZieDcByURby7HuDqPww/exec';
+
 // Utilidades para __dirname en ESModules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -122,12 +128,11 @@ app.post('/enviarYDescargar', async (req, res) => {
             return res.status(403).json({ error: 'reCAPTCHA inválido' });
         }
 
-        // Enviar a Salesforce
-        const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
-        const salesforceData = new URLSearchParams({
-            oid: '00Do0000000b6Io',
+        // ========================================
+        // ENVIAR A GOOGLE SHEETS (ACTIVO)
+        // ========================================
+        const formDataForGoogleSheets = new URLSearchParams({
             first_name: body.first_name,
-            // last_name: body.last_name,
             phone: body.phone,
             email: body.email,
             '00N3l00000Q7A54': body['00N3l00000Q7A54'],
@@ -137,11 +142,38 @@ app.post('/enviarYDescargar', async (req, res) => {
             '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
         });
 
-        await fetch(salesforceUrl, {
+        const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            body: salesforceData,
+            body: formDataForGoogleSheets,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
+
+        if (!googleSheetsResponse.ok) {
+            console.error('Error al enviar a Google Sheets');
+            return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
+        }
+
+        // ========================================
+        // ENVIAR A SALESFORCE (COMENTADO - ACTIVAR CUANDO SEA NECESARIO)
+        // ========================================
+        // const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
+        // const salesforceData = new URLSearchParams({
+        //     oid: '00Do0000000b6Io',
+        //     first_name: body.first_name,
+        //     phone: body.phone,
+        //     email: body.email,
+        //     '00N3l00000Q7A54': body['00N3l00000Q7A54'],
+        //     '00N3l00000Q7A57': body['00N3l00000Q7A57'],
+        //     '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
+        //     '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
+        //     '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+        // });
+        //
+        // await fetch(salesforceUrl, {
+        //     method: 'POST',
+        //     body: salesforceData,
+        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        // });
 
         return res.status(200).json({
             message: 'Formulario enviado correctamente',
@@ -213,12 +245,11 @@ app.post('/enviar', async (req, res) => {
             return res.status(403).json({ error: 'reCAPTCHA inválido' });
         }
 
-        // Enviar datos a Salesforce
-        const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
-        const salesforceData = new URLSearchParams({
-            oid: '00Do0000000b6Io',
+        // ========================================
+        // ENVIAR A GOOGLE SHEETS (ACTIVO)
+        // ========================================
+        const formDataForGoogleSheets = new URLSearchParams({
             first_name: body.first_name,
-            // last_name: body.last_name,
             phone: body.phone,
             email: body.email,
             '00N3l00000Q7A54': body['00N3l00000Q7A54'],
@@ -228,11 +259,38 @@ app.post('/enviar', async (req, res) => {
             '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
         });
 
-        await fetch(salesforceUrl, {
+        const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            body: salesforceData,
+            body: formDataForGoogleSheets,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
+
+        if (!googleSheetsResponse.ok) {
+            console.error('Error al enviar a Google Sheets');
+            return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
+        }
+
+        // ========================================
+        // ENVIAR A SALESFORCE (COMENTADO - ACTIVAR CUANDO SEA NECESARIO)
+        // ========================================
+        // const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
+        // const salesforceData = new URLSearchParams({
+        //     oid: '00Do0000000b6Io',
+        //     first_name: body.first_name,
+        //     phone: body.phone,
+        //     email: body.email,
+        //     '00N3l00000Q7A54': body['00N3l00000Q7A54'],
+        //     '00N3l00000Q7A57': body['00N3l00000Q7A57'],
+        //     '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
+        //     '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
+        //     '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+        // });
+        //
+        // await fetch(salesforceUrl, {
+        //     method: 'POST',
+        //     body: salesforceData,
+        //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        // });
 
         return res.status(200).json({ message: 'Formulario enviado correctamente' });
 
