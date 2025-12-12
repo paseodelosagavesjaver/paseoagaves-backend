@@ -19,13 +19,13 @@ const __dirname = path.dirname(__filename);
 
 // Middleware de CORS
 // app.use(cors({
-//     origin: 'http://paseodelosagaves.mx',
+//     origin: 'https://paseodelosagaves.mx',
 //     methods: ['POST', 'OPTIONS'],
 //     allowedHeaders: ['Content-Type']
 // }));
 
 // const allowedOrigins = [
-//     'http://paseodelosagaves.mx'
+//     'https://paseodelosagaves.mx'
 // ];
 
 // app.use(cors({
@@ -41,12 +41,18 @@ const __dirname = path.dirname(__filename);
 // }));
 
 app.use((req, res, next) => {
-    const allowedOrigins = ["http://paseodelosagaves.mx", "http://www.paseodelosagaves.mx"];
+    const allowedOrigins = [
+        "https://paseodelosagaves.mx",
+        "https://www.paseodelosagaves.mx",
+        "http://paseodelosagaves.mx",
+        "http://www.paseodelosagaves.mx"
+    ];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
         res.header("Access-Control-Allow-Origin", origin);
     }
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://www.google.com");
     next();
 });
