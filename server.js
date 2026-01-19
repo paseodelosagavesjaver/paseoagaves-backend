@@ -135,36 +135,9 @@ app.post('/enviarYDescargar', async (req, res) => {
         }
 
         // ========================================
-        // ENVIAR A GOOGLE SHEETS (ACTIVO)
+        // ENVIAR A GOOGLE SHEETS (DESACTIVADO)
         // ========================================
-        const formDataForGoogleSheets = new URLSearchParams({
-            first_name: body.first_name,
-            phone: body.phone,
-            email: body.email,
-            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
-            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
-            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
-            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
-            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
-        });
-
-        const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            body: formDataForGoogleSheets,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-
-        if (!googleSheetsResponse.ok) {
-            console.error('Error al enviar a Google Sheets');
-            return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
-        }
-
-        // ========================================
-        // ENVIAR A SALESFORCE (COMENTADO - ACTIVAR CUANDO SEA NECESARIO)
-        // ========================================
-        // const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
-        // const salesforceData = new URLSearchParams({
-        //     oid: '00Do0000000b6Io',
+        // const formDataForGoogleSheets = new URLSearchParams({
         //     first_name: body.first_name,
         //     phone: body.phone,
         //     email: body.email,
@@ -175,11 +148,43 @@ app.post('/enviarYDescargar', async (req, res) => {
         //     '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
         // });
         //
-        // await fetch(salesforceUrl, {
+        // const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
         //     method: 'POST',
-        //     body: salesforceData,
+        //     body: formDataForGoogleSheets,
         //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         // });
+        //
+        // if (!googleSheetsResponse.ok) {
+        //     console.error('Error al enviar a Google Sheets');
+        //     return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
+        // }
+
+        // ========================================
+        // ENVIAR A SALESFORCE (ACTIVO)
+        // ========================================
+        const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
+        const salesforceData = new URLSearchParams({
+            oid: '00Do0000000b6Io',
+            first_name: body.first_name,
+            phone: body.phone,
+            email: body.email,
+            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
+            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
+            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
+            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
+            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+        });
+
+        const salesforceResponse = await fetch(salesforceUrl, {
+            method: 'POST',
+            body: salesforceData,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        });
+
+        if (!salesforceResponse.ok) {
+            console.error('Error al enviar a Salesforce');
+            return res.status(500).json({ error: 'Error al enviar a Salesforce' });
+        }
 
         return res.status(200).json({
             message: 'Formulario enviado correctamente',
@@ -252,36 +257,9 @@ app.post('/enviar', async (req, res) => {
         }
 
         // ========================================
-        // ENVIAR A GOOGLE SHEETS (ACTIVO)
+        // ENVIAR A GOOGLE SHEETS (DESACTIVADO)
         // ========================================
-        const formDataForGoogleSheets = new URLSearchParams({
-            first_name: body.first_name,
-            phone: body.phone,
-            email: body.email,
-            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
-            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
-            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
-            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
-            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
-        });
-
-        const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            body: formDataForGoogleSheets,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-
-        if (!googleSheetsResponse.ok) {
-            console.error('Error al enviar a Google Sheets');
-            return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
-        }
-
-        // ========================================
-        // ENVIAR A SALESFORCE (COMENTADO - ACTIVAR CUANDO SEA NECESARIO)
-        // ========================================
-        // const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
-        // const salesforceData = new URLSearchParams({
-        //     oid: '00Do0000000b6Io',
+        // const formDataForGoogleSheets = new URLSearchParams({
         //     first_name: body.first_name,
         //     phone: body.phone,
         //     email: body.email,
@@ -292,11 +270,43 @@ app.post('/enviar', async (req, res) => {
         //     '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
         // });
         //
-        // await fetch(salesforceUrl, {
+        // const googleSheetsResponse = await fetch(GOOGLE_SCRIPT_URL, {
         //     method: 'POST',
-        //     body: salesforceData,
+        //     body: formDataForGoogleSheets,
         //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         // });
+        //
+        // if (!googleSheetsResponse.ok) {
+        //     console.error('Error al enviar a Google Sheets');
+        //     return res.status(500).json({ error: 'Error al registrar en Google Sheets' });
+        // }
+
+        // ========================================
+        // ENVIAR A SALESFORCE (ACTIVO)
+        // ========================================
+        const salesforceUrl = 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8';
+        const salesforceData = new URLSearchParams({
+            oid: '00Do0000000b6Io',
+            first_name: body.first_name,
+            phone: body.phone,
+            email: body.email,
+            '00N3l00000Q7A54': body['00N3l00000Q7A54'],
+            '00N3l00000Q7A57': body['00N3l00000Q7A57'],
+            '00N3l00000Q7A4k': body['00N3l00000Q7A4k'],
+            '00N3l00000Q7A4n': body['00N3l00000Q7A4n'],
+            '00N3l00000Q7A5S': body['00N3l00000Q7A5S'],
+        });
+
+        const salesforceResponse = await fetch(salesforceUrl, {
+            method: 'POST',
+            body: salesforceData,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        });
+
+        if (!salesforceResponse.ok) {
+            console.error('Error al enviar a Salesforce');
+            return res.status(500).json({ error: 'Error al enviar a Salesforce' });
+        }
 
         return res.status(200).json({ message: 'Formulario enviado correctamente' });
 
